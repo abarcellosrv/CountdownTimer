@@ -5,22 +5,10 @@
 	margin-bottom: 20px;
 }
 
-.button {
-	margin-top:64px;
+button {
+	margin-top:20px;
 }
-.countdowns {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-}
-.countdown {
-	background-color: #fafafa;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	padding: 10px 20px;
-	margin: 10px 20px;
-	text-align: center;
-}
+
 .pageHeader {
 	background-color: #ffffff80;
 	box-shadow: 0px 10px 10px 10px #ffffff80;
@@ -38,6 +26,11 @@
 	background: linear-gradient(245deg, rgba(255,255,255,1) 0%, rgba(29,250,253,1) 50%, rgba(255,255,255,1) 100%);
 }
 
+#milestones {
+	margin-left: 120px;
+	
+}
+
 
 html {
 	height: 100%;
@@ -48,4 +41,11 @@ body {
     margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
+}
+
+label {
+	display: inline-block;
+	width: 200px;
+	text-align: right;
+	margin-top: 20px;
 }
