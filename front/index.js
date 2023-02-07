@@ -3,8 +3,6 @@ const display = document.querySelector('#countdown-display');
 
 
 form.addEventListener('submit', async (event) => {
-
-	setInterval(
 	event.preventDefault();
 	const eventName = document.querySelector('#event-name').value;
 	const eventDescription = document.querySelector('#event-desc').value;
@@ -12,6 +10,8 @@ form.addEventListener('submit', async (event) => {
 	const eventTime = document.querySelector('#event-time').value || '00:00';
 	const eventDatetime = `${eventDate}T${eventTime}:00`;
 
+	setInterval(() => {
+	
 	const eventData = {
 		name: eventName,
 		date: eventDatetime,
@@ -36,7 +36,7 @@ form.addEventListener('submit', async (event) => {
 		}).catch(error => {
 			console.log(error)
 		})
-	,1000);
+	}, 1000);	
 });
 
 /* const submitEvent = () => {
