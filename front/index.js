@@ -1,14 +1,10 @@
 const form = document.querySelector('#countdown-form');
 const display = document.querySelector('#countdown-display');
-const addMilestones = document.querySelector('#milestones');
-const milestonesForm = document.querySelector('#milestones-form');
-const milestonesButton = document.querySelector('#add-milestones-button');
 
-milestonesButton.addEventListener('click', function() {
-	addMilestones.style.display = (addMilestones.style.display === 'none') ? 'block' : 'none';
-});
 
 form.addEventListener('submit', async (event) => {
+
+	setInterval(
 	event.preventDefault();
 	const eventName = document.querySelector('#event-name').value;
 	const eventDescription = document.querySelector('#event-desc').value;
@@ -25,17 +21,22 @@ form.addEventListener('submit', async (event) => {
 	fetch("http://localhost:8080/countdown/events", {
 		method: "POST",
 		headers: {
-			"Content-Type" : "application/json"
+			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(eventData)
 	})
-		.then(response => response.json())
-		.then(data => {
-			console.log("Success: ", data);
+		.then(response => {
+			return response.json();
+		}).then(jsonResponse => {
+			let string = "";
+			jsonResponse.forEach(element => {
+				string += element + " : ";
+			});
+			display.innerHTML = string;
+		}).catch(error => {
+			console.log(error)
 		})
-		.catch(error => {
-			console.error("Error: ", error);
-		})
+	,1000);
 });
 
 /* const submitEvent = () => {
