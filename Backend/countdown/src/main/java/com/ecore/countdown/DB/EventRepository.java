@@ -1,10 +1,9 @@
 package com.ecore.countdown.DB;
 
 import com.ecore.countdown.Models.Event;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 
-public interface EventRepository extends CrudRepository<Event, Long> {
+public interface EventRepository extends JpaRepository<Event, Long> {
 
 }
