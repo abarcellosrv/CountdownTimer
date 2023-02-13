@@ -45,29 +45,46 @@ form.addEventListener('submit', async (event) => {
 	
 });
 
+const removeButtons = document.querySelectorAll('[id^="remove-button-"]');
+removeButtons.forEach(removeButton => {
+    removeButton.addEventListener('click', event => {
+        /* event.preventDefault();
+        const eventId = removeButton.id.split('-')[2];
+        const card = removeButton.closest('.col-4');
+		deleteTimer(eventId)
+        card.remove(); */
+		console.log("click!");
+    });
+});
+
 function updateNewCard(event) {
 	const url = `http://localhost:8080/api/countdown/events/timer/${event.id}`
-	setInterval(function () {
+	let updateInterval = setInterval(function () {
 		$.getJSON(url, event.id,
 			function (data) {
 				updateCountdown(event.id,data);
+				if(hasFinished(data)){
+					clearInterval(updateInterval);
+				}
 			}
 		);
 	}, 1000)
+	
 }
 
 
 function createNewCard(event) {
 	const newCardContainer = document.createElement("div");
 	newCardContainer.classList.add("col-4");
+	newCardContainer.id = `card-container-${event.id}`;
 	newCardContainer.innerHTML = `
 	<div class="card">
     <div class="card-body">
     <h5 class="card-title" id="card-title">${event.name}</h5>
 	<h6 class="card-subtitle mb-2 text-muted" id="card-subtitle">${event.description}</h6>
 	<p class="card-text" id="countdown-${event.id}">00:00:00:00</p>
-	<a href="#" class="card-link" id="edit-button-${event.id}" onclick="editCard()">Edit</a>
-	<a href="#" class="card-link" id="remove-button-${event.id}">Remove</a>
+	<button class="card-link" id="edit-button-${event.id}">Edit</a>
+	<button class="card-link" id="remove-button-${event.id}">Remove</a>
 	</div>
     </div>
 
@@ -86,8 +103,26 @@ function updateCountdown(id, data) {
 	document.querySelector(`#countdown-${id}`).innerHTML = `${days}:${hours}:${minutes}:${seconds}`;
 }
 
-function editCard(id, data) {
+function editCard(id, data, url) {
 	
+
+}
+
+function deleteTimer(id) {
+	const urlDelete = url + "/" + id;
+	$.ajax({
+		url: urlDelete,
+		type: 'DELETE',
+		success: function(result) {
+			console.log("Event Deleted: " + result);
+		}
+	});
+}
+
+
+
+function hasFinished(time) {
+	return time.days===0 && time.hours === 0 && time.minutes ===0 && time.seconds ===0;
 }
 
 
