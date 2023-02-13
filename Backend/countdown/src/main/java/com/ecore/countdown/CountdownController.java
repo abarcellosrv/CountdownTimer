@@ -9,7 +9,7 @@ import java.util.Map;
 
 import com.ecore.countdown.DB.EventRepository;
 import com.ecore.countdown.Models.Event;
-import com.ecore.countdown.Test.Employee;
+import com.ecore.countdown.Utils.InvalidDateException;
 import com.ecore.countdown.Utils.ResourceNotFoundException;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +25,29 @@ public class CountdownController {
     private EventRepository eventRepository;
 
     @GetMapping("/events")
-    public List<Event> getAllEvents() { return eventRepository.findAll();}
+    public List<Event> getAllEvents() {
+        return eventRepository.findAll();}
 
     @PostMapping("/events")
-    public @ResponseBody String calculateTime(@RequestBody Event event) {
+    public @ResponseBody Long addNewEvent(@RequestBody Event event) {
         eventRepository.save(event);
-        String timeDiff = new Gson().toJson(event.getTimeRemaining(event.getDate()));
+        return event.getId();
+    }
+
+    @GetMapping("/events/timer/{id}")
+    public @ResponseBody String updateTimer(@PathVariable Long id) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found with id: " + id));
+        String timeDiff = null;
+        try {
+            timeDiff = new Gson().toJson(event.getTimeRemaining(event.getDate()));
+        } catch (InvalidDateException e) {
+            eventRepository.delete(event);
+        }
         System.out.println(timeDiff);
         return timeDiff;
     }
+    /*S*/
 
     @GetMapping("/events/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable Long id) {
@@ -62,6 +76,14 @@ public class CountdownController {
         eventRepository.delete(event);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/events")
+    public ResponseEntity<Map<String, Boolean>> deleteAll(){
+        eventRepository.deleteAll();
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("Deleted all", Boolean.TRUE);
         return ResponseEntity.ok(response);
     }
 }

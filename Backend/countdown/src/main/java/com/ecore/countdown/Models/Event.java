@@ -1,5 +1,6 @@
 package com.ecore.countdown.Models;
 
+import com.ecore.countdown.Utils.InvalidDateException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -28,7 +29,7 @@ public class Event {
 
     public Event() {}
 
-    public Event(String name, LocalDateTime date, String description) {
+    public Event(String name, LocalDateTime date, String description) throws InvalidDateException {
         this.name = name;
         this.date = date;
         this.description = description;
@@ -77,9 +78,12 @@ public class Event {
         this.id = id;
     }
 
-    public Datetime getTimeRemaining(LocalDateTime targetTime) {
+    public Datetime getTimeRemaining(LocalDateTime targetTime) throws InvalidDateException {
         LocalDateTime now = LocalDateTime.now();
         Duration fullTimeDiff = Duration.between(now, targetTime);
+        if(fullTimeDiff.isNegative()){
+            throw new InvalidDateException("Invalid Date");
+        }
         Datetime timeDiff = new Datetime(fullTimeDiff);
         return new Datetime(timeDiff.getDays(), timeDiff.getHours() % 24,timeDiff.getMinutes() % 60, timeDiff.getSeconds() % 60 );
     }

@@ -16,16 +16,6 @@ button {
 	padding:36px;
 }
 
-.light-blue-gradient {
-	background: rgb(255,255,255);
-	background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(0,212,255,1) 60%);
-}
-
-.light-blue-diagonal {
-	background: rgb(255,255,255);
-	background: linear-gradient(245deg, rgba(255,255,255,1) 0%, rgba(29,250,253,1) 50%, rgba(255,255,255,1) 100%);
-}
-
 #milestones {
 	margin-left: 120px;
 	
