@@ -29,7 +29,7 @@ public class Event {
 
     public Event() {}
 
-    public Event(String name, LocalDateTime date, String description) throws InvalidDateException {
+    public Event(String name, LocalDateTime date, String description) {
         this.name = name;
         this.date = date;
         this.description = description;
@@ -78,11 +78,11 @@ public class Event {
         this.id = id;
     }
 
-    public Datetime getTimeRemaining(LocalDateTime targetTime) throws InvalidDateException {
+    public Datetime getTimeRemaining(LocalDateTime targetTime) {
         LocalDateTime now = LocalDateTime.now();
         Duration fullTimeDiff = Duration.between(now, targetTime);
         if(fullTimeDiff.isNegative()){
-            throw new InvalidDateException("Invalid Date");
+            return new Datetime(0,0,0,0);
         }
         Datetime timeDiff = new Datetime(fullTimeDiff);
         return new Datetime(timeDiff.getDays(), timeDiff.getHours() % 24,timeDiff.getMinutes() % 60, timeDiff.getSeconds() % 60 );

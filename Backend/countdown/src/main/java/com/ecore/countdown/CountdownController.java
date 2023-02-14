@@ -38,14 +38,7 @@ public class CountdownController {
     public @ResponseBody String updateTimer(@PathVariable Long id) {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Event not found with id: " + id));
-        String timeDiff = null;
-        try {
-            timeDiff = new Gson().toJson(event.getTimeRemaining(event.getDate()));
-        } catch (InvalidDateException e) {
-            eventRepository.delete(event);
-        }
-        System.out.println(timeDiff);
-        return timeDiff;
+        return new Gson().toJson(event.getTimeRemaining(event.getDate()));
     }
     /*S*/
 
