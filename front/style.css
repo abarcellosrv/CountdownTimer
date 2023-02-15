@@ -1,12 +1,66 @@
+/* Element Classes */
+
+form{
+	height:fit-content;
+	margin:1em;
+}
+
+body {
+	background: linear-gradient(-45deg, #ee775280, #e73c7e80, #23a6d580, #23d5ab80);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+label {
+	display: inline-block;
+	width: 200px;
+	text-align: right;
+	margin-top: 20px;
+}
+
+button {
+	border: 3px solid black;
+	background-color: #ffffff39;
+	color: black;
+	padding: 14px 28px;
+	font-size: 24px;
+	cursor: pointer;
+	border-radius: 16px;
+	border-color: #C4A0E0;
+}
+
+button:hover {
+	background-color: #C4A0E0;
+	color: white;
+}
+
+
+/* Custom classes */
+
+
+
+.card-header {
+	background-color: #EBD8FA;
+}
+
 .input-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
-}
-
-button {
-  margin-top: 20px;
 }
 
 .pageHeader {
@@ -16,55 +70,34 @@ button {
   padding: 36px;
 }
 
-#milestones {
-  margin-left: 120px;
-}
-
-.timers {
-  margin-top: 1.5rem;
-}
-
-html {
-  height: 100%;
-}
-
-body {
-  height: 100%;
-  margin: 0;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-label {
-  display: inline-block;
-  width: 200px;
-  text-align: right;
-  margin-top: 20px;
+.backgroundContainer {
+	border-radius: 30px;
+	background-color: #ffffff80;
+	height: fit-content;
+	padding:20px;
 }
 
 /* Modal classes */
 
-/* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0, 0, 0); 
+  background-color: rgba(0, 0, 0, 0.4); 
 }
 
-/* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 15% auto; 
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 80%; 
 }
 
 /* The Close Button */
@@ -77,7 +110,24 @@ label {
 
 .close:hover,
 .close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
 }
+
+
+.material-symbols-outlined {
+	font-variation-settings:
+	'FILL' 1,
+	'wght' 400,
+	'GRAD' 0,
+	'opsz' 48
+}
+
+div.buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 0.5em;
+}
+

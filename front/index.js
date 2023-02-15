@@ -2,10 +2,9 @@ import Project from './Models/Project.js';
 const form = document.querySelector('#countdown-form');
 const cardContainer = document.querySelector('#card-container');
 const url = "http://localhost:8080/api/countdown/events";
-const urlUpdateTimer = (id) => { return `http://localhost:8080/api/countdown/events/timer/${id}`;}
-const urlUpdateCard = (id) => { return `http://localhost:8080/api/countdown/events/${id}`;}
+let urlUpdateTimer = (id) =>  `http://localhost:8080/api/countdown/events/timer/${id}`;
+let urlUpdateCard = (id) =>  `http://localhost:8080/api/countdown/events/${id}`;
 let allEvents = new Array();
-const editForm = document.querySelector('#edit-form');
 let intervalIds = [];
 
 const modal = document.querySelector(".modal");
@@ -57,6 +56,9 @@ form.addEventListener('submit', async (event) => {
 	})
 
 });
+
+const editForm = document.querySelector('[id^="edit-form"]');
+
 
 editForm.addEventListener('submit', (event) => {
 	event.preventDefault();
@@ -127,19 +129,20 @@ function updateTimerCountdown(event) {
 
 function createNewCard(event) {
 	const newCardContainer = document.createElement("div");
-	newCardContainer.classList.add("col-4");
+	newCardContainer.classList.add("col-4","d-flex", "align-items-stretch");
 	newCardContainer.id = `card-container-${event.id}`;
 	newCardContainer.innerHTML = `
 	<div class="card">
-    <div class="card-body">
-    <h5 class="card-title" id="card-title-${event.id}">${event.name}</h5>
+	<h5 class="card-header d-flex align-items-center justify-content-center h-100" id="card-title-${event.id}">${event.name}</h5>
+    <div class="card-body flex-column h-100">    
 	<h6 class="card-subtitle mb-2 text-muted" id="card-subtitle-${event.id}">${event.description}</h6>
-	<p class="card-text" id="countdown-${event.id}">00:00:00:00</p>
-	<button class="card-link edit" id="edit-button-${event.id}">Edit</button>
-	<button class="card-link remove" id="remove-button-${event.id}">Remove</button>
+	<p class="card-text" id="countdown-${event.id}">00:00:00:00</p>	
 	</div>
+	<div class="container buttons">
+	<button class="material-symbols-outlined" id="edit-button-${event.id}">Edit</button>
+	<button class="material-symbols-outlined" id="remove-button-${event.id}">delete</button>
+	</div>	
     </div>
-
 `;
 	cardContainer.appendChild(newCardContainer);
 	addEventListenerToRemoveButton();
@@ -157,8 +160,11 @@ function updateCountdown(id, data) {
 }
 
 function editTimerInServer(id, data) {
+	$.ajaxSetup({
+		contentType: "application/json"
+	});
 	$.ajax({
-		url: urlUpdate(id),
+		url: urlUpdateCard(id),
 		type: 'PUT',
 		data: data
 	})
@@ -184,9 +190,9 @@ function editCard(id) {
 	$.get(urlUpdateCard(id), 
 		function (data) {
 			const newEvent = new Project(data.id,data.name,data.date,data.description);
-			cardTitle.textContent(data.name);
-			cardDescription.textContent(data.description);
-			clearInterval(intervalIds[eventId]);
+			cardTitle.innerHTML=data.name;
+			cardDescription.innerHTML = data.description;
+			clearInterval(intervalIds[data.id]);
 			updateTimerCountdown(newEvent);
 		}
 	);	
