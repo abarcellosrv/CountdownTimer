@@ -50,7 +50,7 @@ public class CountdownController {
     }
 
     @PutMapping("/events/{id}")
-    public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event eventDetails){
+    public @ResponseBody ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event eventDetails){
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Event not found with id: " + id));
         event.setName(eventDetails.getName());
@@ -78,6 +78,16 @@ public class CountdownController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("Deleted all", Boolean.TRUE);
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("events/completed/{id}")
+    public ResponseEntity<Event> setCompletedEvent(@PathVariable Long id, @RequestBody Boolean completed) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found with id: " + id));
+        event.setCompleted(completed);
+        event.setDate(LocalDateTime.now());
+        Event updatedEvent = eventRepository.save(event);
+        return ResponseEntity.ok(updatedEvent);
     }
 }
 

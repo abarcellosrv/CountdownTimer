@@ -17,27 +17,33 @@
 	<body>
 
 		
-			<div class="container">
+			<div class="container pageHeader">
 				<h3>Project Manager</h3>
+				<h5>Manage Project deadlines in one place!</h5>
 			</div>
 			<div class="container">
-				<form id="countdown-form" class="row">
-					<div class="">
-						<label for="event-name">Event Name:</label>
-						<input type="text" id="event-name" name="event-name" required>
+				<form id="countdown-form" class="">
+					<div class="textInputs container">
+						<div class=" column-gap-5">
+							<input type="text" id="event-name" name="event-name" class="form-control" placeholder="Project Name" required>
+						</div>
+
+						<div class="column-gap-5">
+							<input type="text" name="event-desc" id="event-desc" class="form-control" placeholder="Project Description">
+						</div>
 					</div>
-					<div class="">
-						<label for="event-desc">Event Description:</label>
-						<input type="text" name="event-desc" id="event-desc">
+					<div class="timeInputs">
+						<div class="">
+							<label for="event-date" class="">Due Date</label>
+							<input type="date" id="event-date" name="event-date" class="form-control column-gap-5"  required>
+						</div>
+						<div>
+							<label for="event-time" class="">Due time (optional)</label>
+							<input type="time" id="event-time" name="event-time" class="form-control column-gap-5">
+						</div>
+						
 					</div>
-					<div class="">
-						<label for="event-date">Event Date:</label>
-						<input type="date" id="event-date" name="event-date" required>
-					</div>
-					<div class="col">
-						<label for="event-time">Event Time (optional):</label>
-						<input type="time" id="event-time" name="event-time">
-					</div>
+					
 					<div class="d-grid">
 						<button type="submit" class="" id="form-button">Create
 							Event</button>

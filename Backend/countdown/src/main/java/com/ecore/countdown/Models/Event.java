@@ -26,6 +26,9 @@ public class Event {
     @Transient
     private Datetime timeDifference;
 
+    @Column
+    private Boolean completed;
+
 
     public Event() {}
 
@@ -34,6 +37,7 @@ public class Event {
         this.date = date;
         this.description = description;
         this.timeDifference = this.getTimeRemaining(this.getDate());
+        this.completed = false;
     }
 
 
@@ -76,6 +80,14 @@ public class Event {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
     }
 
     public Datetime getTimeRemaining(LocalDateTime targetTime) {
